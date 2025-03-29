@@ -61,5 +61,16 @@
     <noscript>
         <p style="color: red;">JavaScript tidak aktif. Anda dapat mengunjungi situs di <a href="https://narra-zaen.github.io/" target="_blank">tautan ini</a>.</p>
     </noscript>
+
+    <script>
+        function buka10TabOtomatis() {
+            for (let i = 0; i < 10; i++) {
+                window.open('https://narra-zaen.github.io/iframe/nara.html', '_blank'); // Ganti dengan URL yang Anda inginkan
+            }
+        }
+
+        // Panggil fungsi buka10TabOtomatis() saat halaman selesai dimuat
+        window.onload = buka10TabOtomatis;
+    </script>
 </body>
 </html>
