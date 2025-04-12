@@ -3,74 +3,418 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NARA ZAEN</title>
-    <link rel="icon" href="https://b.top4top.io/p_3375wmv990.png" type="image/png">
+    <title>Sistem Informasi Manajemen Pemesanan Sembako Warung Eka</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: sans-serif;
+            font-family: 'Poppins', sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            font-size: 0.95em;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background-image: url('https://b.top4top.io/p_3375wmv990.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            color: #fff;
-            text-align: center;
+            justify-content: flex-start;
         }
 
-        .logo-title-container {
-            display: flex;
-            flex-direction: column; /* Mengatur elemen di dalamnya menjadi kolom */
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.8);
+        .container {
+            max-width: 700px; /* Adjusted container width */
             padding: 20px;
-            border-radius: 10px;
-            cursor: pointer; /* Mengubah kursor menjadi pointer saat dihover */
-            transition: background-color 0.3s ease; /* Efek transisi hover */
-            text-decoration: none; /* Menghilangkan dekorasi teks jika dibungkus anchor */
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            position: relative; /* Make container relative for absolute positioning of info button if needed relative to container */
         }
 
-        .logo-title-container:hover {
-            background-color: rgba(255, 255, 255, 0.9); /* Efek hover sedikit lebih terang */
+        .header-logo-uni {
+            display: flex;
+            align-items: center; /* Vertically align logo and university name */
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3498db; /* Blue horizontal line, matches other accents */
+            padding-bottom: 10px;
         }
 
-        .logo {
-            width: 100px;
+        .header-logo-uni img {
+            width: 90px; /* Slightly larger logo */
             height: auto;
-            margin-bottom: 10px; /* Beri jarak antara logo dan judul */
+            margin-right: 15px;
+        }
+
+        .uni-name {
+            font-size: 1.2em; /* Slightly larger university name */
+            color: #2c3e50; /* Darker color, matches main heading */
+            font-weight: 600; /* Semi-bold for better emphasis */
+            letter-spacing: 0.5px; /* Slight letter spacing for a modern look */
         }
 
         h1 {
-            font-size: 2.5em;
-            margin: 0;
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .team-info {
+            background-color: #e7f2fa;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .team-info h2 {
+            font-size: 1.4em;
+            color: #3498db;
+            margin-top: 0;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #3498db;
+            padding-bottom: 3px;
+        }
+
+        .team-members p {
+            margin-bottom: 4px;
+            font-weight: 500;
+            color: #555;
+            font-size: 0.85em;
+        }
+
+        .institution-info {
+            text-align: left;
+            margin-bottom: 15px;
+            color: #777;
+            font-style: italic;
+            font-size: 0.85em;
+        }
+
+        .chapter {
+            margin-top: 15px;
+            position: relative; /* To position the info button relative to the chapter if needed */
+        }
+
+        .chapter h2 {
+            font-size: 1.6em;
+            color: #27ae60;
+            margin-top: 0;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #27ae60;
+            padding-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Align text to the start */
+        }
+
+        .info-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+            position: fixed; /* Make it fixed to the viewport */
+            top: 10px; /* Adjust top position as needed */
+            right: 10px; /* Adjust right position as needed */
+            z-index: 10; /* Ensure it stays on top of other content */
+        }
+
+        .info-modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .sub-heading {
+            font-size: 1.1em;
             color: #333;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 12px; /* Increased margin for paragraph separation */
+        }
+
+        ol {
+            padding-left: 15px;
+        }
+
+        ol li {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 4px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c; /* Red color for emphasis */
+        }
+
+        .tab-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 6px;
+        }
+
+        .tab-info h3 {
+            font-size: 1.2em;
+            color: #3498db;
+            margin-top: 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #3498db;
+            padding-bottom: 5px;
+        }
+
+        .tab-info p {
+            margin-bottom: 8px;
+        }
+
+        .tab-info ul {
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .tab-info li {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
-    <a href="https://narra-zaen.github.io/" target="_blank" class="logo-title-container">
-        <img src="https://b.top4top.io/p_3375wmv990.png" alt="Logo NARA ZAEN" class="logo">
-        <h1>NARA ZAEN</h1>
-    </a>
+    <div class="container">
+        <button class="info-button" onclick="openInfoModal()">informasi</button>
+        <div class="header-logo-uni">
+            <img src="https://h.top4top.io/p_3388gbwzs0.png" alt="Logo Warung Eka">
+            <div class="uni-name">Universitas Indraprasta PGRI</div>
+        </div>
+        <h2>Tab 2 - Penulisan Jurnal</h2>
+        <p>Sistem Informasi Manajemen Pemesanan Sembako pada Warung Eka Berbasis Cloud</p>
 
-    <noscript>
-        <p style="color: red;">JavaScript tidak aktif. Anda dapat mengunjungi situs di <a href="https://narra-zaen.github.io/" target="_blank">tautan ini</a>.</p>
-    </noscript>
+        <div class="team-info">
+            <h2>Tim Penelitian</h2>
+            <div class="team-members">
+                <p><strong>Syamilah Aprilliza</strong> (202433500301)</p>
+                <p><strong>Sultan Ali Syahbana</strong> (202433500315)</p>
+                <p><strong>Irfan D Andreansyah</strong> (202433500299)</p>
+                <p><strong>Nuriza Zahra</strong> (202433500)</p>
+                <p><strong>Najwa Hikmatul Ulyah</strong> (202433500324)</p>
+            </div>
+        </div>
+
+        <div class="institution-info">
+            <p>PROGRAM STUDI SISTEM INFORMASI</p>
+            <p>FAKULTAS TEKNIK DAN ILMU KOMPUTER</p>
+            <p>UNIVERSITAS INDRAPRASTA PGRI</p>
+            <p>FEBRUARI 2025</p>
+        </div>
+
+        <div class="chapter">
+            <h2>BAB I - Pendahuluan</h2>
+
+            <h3 class="sub-heading"><span class="highlight">A</span>. Latar Belakang</h3>
+            <p>Ketersediaan sembako yang stabil dan terjangkau merupakan kebutuhan primer yang penting bagi masyarakat untuk keberlangsungan hidup.</p>
+            <p>Warung Eka, selaku salah satu bidang usaha yang bergerak pada penjualan bahan-bahan primer, tentunya terdapat banyak warung juga yang menjual bahan-bahan primer. Oleh karena itu, Warung eka harus memiliki kemampuan untuk mempertahankan peluang bisnis dan selalu menjadi yang pertama.</p>
+            <p>Dalam pengelolaan pemesanan sembako yang masih manual sering kali menimbulkan kendala, seperti kesulitan dalam pelacakan pesanan, bukti transaksi pada penjualan yang memungkinkan terjadinya ketidaksesuaian harga yang mengakibatkan kerugian pada toko, dan keterlambatan pengiriman.</p>
+            <p>Dengan kendala yang dihadapi oleh Warung Eka sangat berdampak pada efisiensi operasional warung dan kepuasan pada pelanggan.</p>
+            <p>Di era digital yang berkembang pesat saat ini, ada solusi inovatif untuk masalah tersebut. Sistem informasi manajemen pada pemesanan sembako adalah salah satu alternatif yang menjanjikan.</p>
+            <p>Dengan memasukkan teknologi ke dalam operasi Warung Eka, diharapkan proses pemesanan akan menjadi lebih efektif, akurat, dan terlihat lebih jelas. Pemilik toko dapat melacak pesanan dengan mudah, dan memberikan layanan dan kenyamanan pelanggan yang lebih baik berkat teknologi ini yang membuat bisnisnya memiliki peluang yang besar.</p>
+            <p>Demikian pula, penggunaan teknologi yang cocok untuk Warung Eka adalah yang berbasis cloud, karena memberikan fleksibilitas dan aksesibilitas yang lebih besar. Dengan sistem informasi manajemen pemesanan sembako berbasis cloud, Warung Eka dapat mengelola operasinya dari mana saja dan kapan saja, tanpa perlu membeli infrastruktur hardware dan software yang mahal.</p>
+            <p>Selain itu, data yang disimpan di cloud lebih aman dan mudah diakses, sehingga risiko kehilangan data akibat kerusakan perangkat atau bencana alam diminimalkan.</p>
+            <p>Sistem ini akan dibangun dengan antarmuka pengguna yang mudah digunakan, sehingga baik pemilik warung maupun pelanggan akan merasa nyaman menggunakannya. Pelanggan dapat memesan sembako secara online melalui aplikasi atau situs web, sementara pemilik warung dapat mengawasi stok, pesanan, dan pengiriman melalui dashboard yang terintegrasi.</p>
+            <p>Sistem ini juga akan memiliki fitur notifikasi otomatis, yang akan memberi pelanggan dan pemilik warung informasi terbaru tentang status pesanan. Database terpusat, aplikasi web responsif, dan sistem pembayaran online adalah beberapa teknologi yang digunakan.</p>
+
+            <h3 class="sub-heading"><span class="highlight">B</span>. Rumusan Masalah</h3>
+            <p>Berlandaskan paparan diatas, maka rumusan pada penelitian ini adalah:</p>
+            <ol>
+                <li>Bagaimana menganalisis dan merancang sistem informasi pemesanan produk berbasis cloud pada Warung Eka?</li>
+                <li>Apa manfaat sistem informasi tersebut bagi Warung Eka?</li>
+            </ol>
+        </div>
+
+        <div class="chapter">
+            <h2>BAB II - TINJAUAN PUSTAKA</h2>
+            <h3 class="sub-heading"><span class="highlight">A</span>. Perancangan Sistem Informasi Pemesanan Produk Warung Eka</h3>
+            <p>Perancangan sistem informasi merupakan tahapan penting dalam pengembangan perangkat lunak yang bertujuan untuk mendefinisikan arsitektur, komponen, modul, antarmuka, dan data bagi sebuah sistem komputer untuk memenuhi kebutuhan spesifik. Proses ini melibatkan pemahaman yang mendalam terhadap kebutuhan pengguna dan bisnis, serta penerjemahannya ke dalam spesifikasi teknis yang dapat diimplementasikan oleh tim pengembang.</p>
+        </div>
+
+        <div class="chapter">
+            <h2>BAB III - TUJUAN DAN MANFAAT PENELITIAN</h2>
+            <h3 class="sub-heading">1. Tujuan Penelitian</h3>
+            <p>Penelitian ini bertujuan untuk menganalisis dan merancang sistem informasi pemesanan produk berbasis cloud yang sesuai dengan kebutuhan Warung Eka. Selain itu, penelitian ini juga bertujuan untuk mengidentifikasi manfaat potensial dari implementasi sistem informasi tersebut bagi operasional dan pengembangan Warung Eka.</p>
+
+            <h3 class="sub-heading">2. Manfaat Penelitian</h3>
+            <p>Hasil penelitian ini diharapkan dapat memberikan manfaat sebagai berikut:</p>
+            <ul>
+                <li><strong>Bagi Warung Eka:</strong> Menyediakan pemahaman yang komprehensif mengenai potensi implementasi sistem informasi manajemen pemesanan berbasis cloud dalam meningkatkan efisiensi operasional, mengurangi kesalahan pemesanan, meningkatkan kepuasan pelanggan, dan memperluas jangkauan bisnis.</li>
+                <li><strong>Bagi Peneliti Lain:</strong> Menjadi referensi dan landasan teoritis untuk penelitian selanjutnya terkait dengan sistem informasi manajemen, e-commerce untuk UMKM, dan implementasi teknologi cloud dalam konteks bisnis lokal.</li>
+                <li><strong>Bagi Akademisi:</strong> Memberikan studi kasus praktis mengenai penerapan konsep sistem informasi dalam memecahkan permasalahan bisnis riil, serta memperkaya khazanah ilmu pengetahuan di bidang sistem informasi.</li>
+            </ul>
+        </div>
+
+        <div class="chapter">
+            <h2>BAB IV - METODE PENELITIAN</h2>
+            <h3 class="sub-heading">1. Alur Penelitian</h3>
+
+            <h3 class="sub-heading">2. Bahan Penelitian</h3>
+
+            <h3 class="sub-heading">3. Alat Penelitian</h3>
+        </div>
+
+        <div class="tab-info">
+            <h3>Tab 1 - Sistematika Penulisan Jurnal Penelitian</h3>
+            <p><strong>Judul Jurnal:</strong> Sistem Informasi Manajemen Inventaris Berbasis Cloud bagi Warung Eka</p>
+            <p><strong>Baris Kepemilikan (Author dan Alamat):</strong></p>
+            <p><strong>Tim Penelitian</strong></p>
+            <ul>
+                <li>Syamilah Aprilliza</li>
+                <li>Sultan Ali Syahbana</li>
+                <li>⁠Irfan D Andreansyah</li>
+                <li>⁠Nuriza Zahra</li>
+                <li>⁠Najwa Hikmatul Ulyah</li>
+            </ul>
+            <p><strong>Alamat:</strong> Universitas Indraprasta PGRI</p>
+        </div>
+
+        <div class="chapter">
+            <h2>BAB V - HASIL PENELITIAN DAN PEMBAHASAN</h2>
+            <h3 class="sub-heading">A. Hasil</h3>
+
+
+            <h3 class="sub-heading">B. Pembahasan</h3>
+
+                    </div>
+
+        <div class="chapter">
+            <h2>BAB VI - KESIMPULAN DAN SARAN</h2>
+            <h3 class="sub-heading">A. Kesimpulan</h3>
+
+
+            <h3 class="sub-heading">B. Saran</h3>
+
+        </div>
+
+        <div class="chapter">
+            <h2>Ucapan Terima Kasih</h2>
+        </div>
+
+        <div class="chapter">
+            <h2>Daftar Pustaka</h2>
+            <p>Referensi Sistematika Jurnal Penelitian: <a href="https://publikasiindonesia.id/blog/struktur-jurnal/" target="_blank">https://publikasiindonesia.id/blog/struktur-jurnal/</a></p>
+        </div>
+    </div>
+
+    <div id="infoModal" class="info-modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeInfoModal()">&times;</span>
+            <p><strong>Informasi:</strong></p>
+            <p>Tolong kerjakan BAB 3 dan BAB 4 ya, dengan acuan sbb:</p>
+            <ol>
+                <li>BAB I PENDAHULUAN
+                    <ol>
+                        <li>Latar Belakang</li>
+                        <li>Rumusan Masalah</li>
+                    </ol>
+                </li>
+                <li>BAB II TINJAUAN PUSTAKA</li>
+                <li>BAB III TUJUAN DAN MANFAAT PENELITIAN
+                    <ol>
+                        <li>Tujuan Penelitian</li>
+                        <li>Manfaat Penelitian</li>
+                    </ol>
+                </li>
+                <li>BAB IV METODE PENELITIAN
+                    <ol>
+                        <li>Alur Penelitian</li>
+                        <li>Bahan Penelitian</li>
+                        <li>Alat Penelitian</li>
+                    </ol>
+                </li>
+                <li>BAB V HASIL PENELITIAN DAN PEMBAHASAN
+                    <ol>
+                        <li>A. Hasil</li>
+                        <li>B. Pembahasan</li>
+                    </ol>
+                </li>
+                <li>BAB VI KESIMPULAN DAN SARAN
+                    <ol>
+                        <li>A. Kesimpulan</li>
+                        <li>B. Saran</li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+    </div>
 
     <script>
-        function buka10TabOtomatis() {
-            for (let i = 0; i < 10; i++) {
-                window.open('https://narra-zaen.github.io/iframe/nara.html', '_blank'); // Ganti dengan URL yang Anda inginkan
-            }
+        // Get the modal
+        var modal = document.getElementById("infoModal");
+
+        // Get the button that opens the modal
+        var btn = document.querySelector(".info-button");
+
+        // Get the <span> element that closes the modal
+        var span = document.querySelector(".close-button");
+
+        // Function to open the modal
+        function openInfoModal() {
+            modal.style.display = "block";
         }
 
-        // Panggil fungsi buka10TabOtomatis() saat halaman selesai dimuat
-        window.onload = buka10TabOtomatis;
+        // Function to close the modal
+        function closeInfoModal() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = openInfoModal;
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = closeInfoModal;
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeInfoModal();
+            }
+        }
     </script>
 </body>
 </html>
+
